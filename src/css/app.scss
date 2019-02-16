@@ -1,0 +1,20 @@
+/* iOS Cordova Tweak */
+.device-cordova.device-ios {
+  height: 100vh;
+}
+
+/* Custom color theme properties */
+:root {
+  --f7-theme-color: #ec644b;
+  --f7-theme-color-rgb: 236, 100, 75;
+  --f7-theme-color-shade: #e84426;
+  --f7-theme-color-tint: #f08470;
+}
+
+/* Your app custom styles here */
+
+@import url('https://fonts.googleapis.com/css?family=Raleway:200,400,700');
+
+body {
+  font-family: 'Raleway', sans-serif;
+}
