@@ -6,7 +6,6 @@ Framework7 app created with following options:
 
 ```
 {
-  "cwd": "C:\\xampp\\htdocs\\CardCreo",
   "type": [
     "cordova",
     "web"
