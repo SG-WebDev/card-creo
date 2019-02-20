@@ -18,14 +18,25 @@
 body {
   font-family: 'Raleway', sans-serif;
 }
+
 .navbar {
   z-index: 5001;
 }
+
 .title-large-text {
   color: #ec644b;
   font-size: 52px;
   font-weight: 200;
 }
+
 .title {
   color: #ec644b;
+}
+.button {
+  margin: 20px 0;
+}
+
+img {
+  width: 100%;
+  height: auto;
 }
