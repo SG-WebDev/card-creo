@@ -3,11 +3,12 @@
         <!-- Top Navbar -->
         <f7-navbar :sliding="false" large>
             <f7-nav-title sliding>Create</f7-nav-title>
-            <f7-nav-title-large sliding>CardCreo</f7-nav-title-large>
+            <f7-nav-title-large>CardCreo</f7-nav-title-large>
         </f7-navbar>
         <f7-block>
-            <f7-button large fill @click="colorPicker = true">Select background color</f7-button>
-            <f7-button large outline  @click="uploadLogo = true">Upload logo</f7-button>
+            <f7-button large fill @click="colorPickerBg = true">Select background color</f7-button>
+            <f7-button large fill @click="colorPickerFont = true">Select font color</f7-button>
+            <f7-button large outline @click="uploadLogo">Upload logo</f7-button>
         </f7-block>
         <div class="list no-hairlines-md">
             <ul>
@@ -59,9 +60,9 @@
             </ul>
         </div>
         <f7-block>
-            <div class="preview" v-bind:style="{ backgroundColor: bgColor}">
+            <div class="preview" v-bind:style="{ backgroundColor: bgColor, color: fontColor}">
                 <div class="preview__logo">
-                    <img src="" alt="">
+                    <img v-bind:src="logo" alt="User Logo">
                 </div>
                 <div class="preview__info">
                     <p class="preview__info--name">{{name}}</p>
@@ -72,19 +73,34 @@
                 </div>
             </div>
         </f7-block>
-        <!-- Grid -->
-        <f7-actions :grid="true" :opened="colorPicker" @actions:closed="colorPicker = false">
+        <f7-actions :grid="true" :opened="colorPickerBg" @actions:closed="colorPickerBg = false">
             <f7-actions-group>
-                <f7-actions-button v-bind:style="{ backgroundColor: gray }" @click="changeBg(gray)"></f7-actions-button>
-                <f7-actions-button v-bind:style="{ backgroundColor: white }" @click="changeBg(white)"></f7-actions-button>
-                <f7-actions-button v-bind:style="{ backgroundColor: black }" @click="changeBg(black)"></f7-actions-button>
-                <f7-actions-button v-bind:style="{ backgroundColor: red }" @click="changeBg(red)"></f7-actions-button>
+                <f7-actions-button v-bind:style="{ backgroundColor: gray }"
+                                   @click="changeBg(gray)"></f7-actions-button>
+                <f7-actions-button v-bind:style="{ backgroundColor: white }"
+                                   @click="changeBg(white)"></f7-actions-button>
+                <f7-actions-button v-bind:style="{ backgroundColor: black }"
+                                   @click="changeBg(black)"></f7-actions-button>
+                <f7-actions-button v-bind:style="{ backgroundColor: grey }"
+                                   @click="changeBg(grey)"></f7-actions-button>
             </f7-actions-group>
             <f7-actions-group>
-                <f7-actions-button v-bind:style="{ backgroundColor: blue }" @click="changeBg(blue)"></f7-actions-button>
-                <f7-actions-button v-bind:style="{ backgroundColor: green }" @click="changeBg(green)"></f7-actions-button>
-                <f7-actions-button v-bind:style="{ backgroundColor: yellow }" @click="changeBg(yellow)"></f7-actions-button>
-                <f7-actions-button v-bind:style="{ backgroundColor: orange }" @click="changeBg(orange)"></f7-actions-button>
+                <f7-actions-button v-bind:style="{ backgroundColor: blue }"
+                                   @click="changeBg(blue)"></f7-actions-button>
+                <f7-actions-button v-bind:style="{ backgroundColor: green }"
+                                   @click="changeBg(green)"></f7-actions-button>
+                <f7-actions-button v-bind:style="{ backgroundColor: red }"
+                                   @click="changeBg(red)"></f7-actions-button>
+                <f7-actions-button v-bind:style="{ backgroundColor: orange }"
+                                   @click="changeBg(orange)"></f7-actions-button>
+            </f7-actions-group>
+        </f7-actions>
+        <f7-actions :grid="true" :opened="colorPickerFont" @actions:closed="colorPickerFont = false">
+            <f7-actions-group>
+                <f7-actions-button v-bind:style="{ backgroundColor: white }"
+                                   @click="changeFont(white)"></f7-actions-button>
+                <f7-actions-button v-bind:style="{ backgroundColor: black }"
+                                   @click="changeFont(black)"></f7-actions-button>
             </f7-actions-group>
         </f7-actions>
     </f7-page>
@@ -92,23 +108,33 @@
 <style scoped>
     .preview {
         display: flex;
-        justify-content: center;
+        justify-content: space-around;
         align-items: center;
         width: 100%; /* 340px = 90 mm*/
         height: 200px; /* 189px = 50 mm*/
         border: 1px solid #999999;
+        overflow: hidden;
     }
+
+    .preview__logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+
     .actions-group {
         display: flex;
         justify-content: center;
         align-items: center;
     }
+
     .actions-button {
         width: 50px;
         height: 50px;
         padding: 25px;
-        margin: 10px 20px;
-        border-radius: 50%!important;
+        margin: 10px;
+        border-radius: 50% !important;
         border: 1px solid #aaaaaa;
     }
 </style>
@@ -117,30 +143,46 @@
     export default {
         data() {
             return {
-                colorPicker: false,
+                colorPickerBg: false,
+                colorPickerFont: false,
                 bgColor: '',
+                fontColor: '',
+                logo: '',
                 name: '',
                 address: '',
                 email: '',
                 phone: '',
                 website: '',
                 gray: '#444444',
+                grey: '#888888',
                 white: '#ffffff',
                 black: '#000000',
                 red: '#d64541',
-                blue: '#6bb9f0',
-                green: '#3fc380',
-                yellow: '#ffff7e',
-                orange: '#f89406',
+                blue: '#2574a9',
+                green: '#16a085',
+                orange: '#f27935',
             };
         },
         methods: {
-            changeBg : function(e) {
+            changeBg: function (e) {
                 this.bgColor = e;
             },
-            uploadLogo : function () {
-                
-            }
+            changeFont: function (e){
+                this.fontColor = e;
+            },
+            uploadLogo: function () {
+                var srcType = Camera.PictureSourceType.SAVEDPHOTOALBUM;
+                var options = setOptions(srcType);
+                var func = createNewFileEntry;
+
+                navigator.camera.getPicture(function cameraSuccess(imgUrl) {
+                    this.logo = imgUrl;
+                    alert(imgUrl);
+                }, function cameraError(error) {
+                    console.debug("Unable to obtain picture: " + error, "app");
+
+                }, options);
+            },
         },
     };
 </script>

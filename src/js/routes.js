@@ -1,6 +1,7 @@
 
 import CreatePage from '../pages/create.vue';
 import AboutPage from '../pages/about.vue';
+import ScanPage from '../pages/scan.vue';
 import MyCardsPage from '../pages/my-cards.vue';
 import CardPage from '../pages/card.vue';
 import NotFoundPage from '../pages/404.vue';
@@ -13,6 +14,10 @@ var routes = [
   {
     path: '/about/',
     component: AboutPage,
+  },
+  {
+    path: '/scan/',
+    component: ScanPage,
   },
   {
     path: '/my-cards/',

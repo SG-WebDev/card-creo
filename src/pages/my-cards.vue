@@ -1,6 +1,6 @@
 <template>
     <f7-page name="catalog">
-        <f7-navbar title="Cards"></f7-navbar>
+        <f7-navbar title="My Cards"></f7-navbar>
         <f7-list>
             <f7-list-item
                     v-for="(product) in products"

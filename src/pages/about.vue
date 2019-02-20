@@ -6,7 +6,7 @@
             <p>
                 This is hybrid mobile app based on Framework7 + Vue.js created by
                 <a target="_blank" class="link external" href="https://github.com/SG-WebDev/">SG-WebDev</a> used to
-                create and generate templates of business cards.
+                create and sharing business cards.
             </p>
         </f7-block>
 

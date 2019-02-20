@@ -7,6 +7,7 @@
             <!-- Tabbar for switching views-tabs -->
             <f7-toolbar tabbar labels bottom>
                 <f7-link tab-link="#view-create" icon-md="material:create" text="Create"></f7-link>
+                <f7-link tab-link="#view-scan" icon-md="material:camera_alt" text="Scan"></f7-link>
                 <f7-link tab-link="#view-my-cards" icon-md="material:collections" text="My Cards"></f7-link>
                 <f7-link tab-link="#view-about" icon-md="material:info" text="About"></f7-link>
             </f7-toolbar>
@@ -14,10 +15,13 @@
             <!-- Your main view/tab, should have "view-main" class. It also has "tab-active" class -->
             <f7-view id="view-create" main tab tab-active url="/"></f7-view>
 
-            <!-- Catalog View -->
+            <!-- Scan View -->
+            <f7-view id="view-scan" name="scan" tab url="/scan/"></f7-view>
+
+            <!-- My Cards View -->
             <f7-view id="view-my-cards" name="my-cards" tab url="/my-cards/"></f7-view>
 
-            <!-- Settings View -->
+            <!-- About View -->
             <f7-view id="view-about" name="about" tab url="/about/"></f7-view>
 
         </f7-views>
