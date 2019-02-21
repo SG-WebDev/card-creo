@@ -61,8 +61,8 @@
         </div>
         <f7-block>
             <div class="preview" v-bind:style="{ backgroundColor: bgColor, color: fontColor}">
-                <div class="preview__logo">
-                    <img v-bind:src="logo" alt="User Logo">
+                <div v-if="logo" class="preview__logo">
+                    <img class="preview__logo--img" :src="logo" alt="User Logo">
                 </div>
                 <div class="preview__info">
                     <p class="preview__info--name">{{name}}</p>
@@ -106,23 +106,6 @@
     </f7-page>
 </template>
 <style scoped>
-    .preview {
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        width: 100%; /* 340px = 90 mm*/
-        height: 200px; /* 189px = 50 mm*/
-        border: 1px solid #999999;
-        overflow: hidden;
-    }
-
-    .preview__logo {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-    }
-
     .actions-group {
         display: flex;
         justify-content: center;
@@ -147,7 +130,7 @@
                 colorPickerFont: false,
                 bgColor: '',
                 fontColor: '',
-                logo: '',
+                logo: null,
                 name: '',
                 address: '',
                 email: '',
@@ -167,21 +150,21 @@
             changeBg: function (e) {
                 this.bgColor = e;
             },
-            changeFont: function (e){
+            changeFont: function (e) {
                 this.fontColor = e;
             },
             uploadLogo: function () {
-                var srcType = Camera.PictureSourceType.SAVEDPHOTOALBUM;
-                var options = setOptions(srcType);
-                var func = createNewFileEntry;
-
-                navigator.camera.getPicture(function cameraSuccess(imgUrl) {
-                    this.logo = imgUrl;
-                    alert(imgUrl);
-                }, function cameraError(error) {
-                    console.debug("Unable to obtain picture: " + error, "app");
-
-                }, options);
+                navigator.camera.getPicture(this.imgOnSuccess, this.imgOnFail, {
+                    quality: 50,
+                    destinationType: Camera.DestinationType.DATA_URL,
+                    sourceType: Camera.PictureSourceType.SAVEDPHOTOALBUM,
+                });
+            },
+            imgOnSuccess: function(imageData) {
+                this.logo = "data:image/jpeg;base64," + imageData;
+            },
+            imgOnFail: function(message) {
+                alert('Błąd podczas pobierania zdjęcia');
             },
         },
     };

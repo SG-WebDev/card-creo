@@ -32,6 +32,7 @@ body {
 .title {
   color: #ec644b;
 }
+
 .button {
   margin: 20px 0;
 }
@@ -39,4 +40,30 @@ body {
 img {
   width: 100%;
   height: auto;
+}
+
+.preview {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%; /* 340px = 90 mm*/
+  height: 200px; /* 189px = 50 mm*/
+  border: 1px solid #999999;
+  overflow: hidden;
+}
+.preview__info {
+  margin-right: 25px;
+}
+
+.preview__logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin-left: 25px;
+}
+
+.preview__logo--img {
+  max-height: 100px;
+  max-width:50%;
 }
