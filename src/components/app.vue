@@ -39,7 +39,7 @@
                 f7params: {
                     id: 'io.cardcreo.app', // App bundle ID
                     name: 'CardCreo', // App name
-                    theme: 'md', // Automatic theme detection
+                    theme: 'md',
                     // App routes
                     routes: routes,
                     // Input settings

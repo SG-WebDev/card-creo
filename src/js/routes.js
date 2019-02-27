@@ -8,22 +8,27 @@ import NotFoundPage from '../pages/404.vue';
 
 var routes = [
   {
+    name: 'index',
     path: '/',
     component: CreatePage,
   },
   {
+    name: 'about',
     path: '/about/',
     component: AboutPage,
   },
   {
+    name: 'scan',
     path: '/scan/',
     component: ScanPage,
   },
   {
+    name: 'my-cards',
     path: '/my-cards/',
     component: MyCardsPage,
   },
   {
+    name: 'card',
     path: '/my-cards/:id/',
     component: CardPage,
   },

@@ -6,8 +6,8 @@
             <f7-nav-title-large>CardCreo</f7-nav-title-large>
         </f7-navbar>
         <f7-block>
-            <f7-button large fill @click="colorPickerBg = true">Select background color</f7-button>
-            <f7-button large fill @click="colorPickerFont = true">Select font color</f7-button>
+            <f7-button large outline @click="colorPickerBg = true">Select background color</f7-button>
+            <f7-button large outline @click="colorPickerFont = true">Select font color</f7-button>
             <f7-button large outline @click="uploadLogo">Upload logo</f7-button>
         </f7-block>
         <div class="list no-hairlines-md">
@@ -73,6 +73,9 @@
                 </div>
             </div>
         </f7-block>
+        <f7-block>
+            <f7-button large fill @click="saveCard">Save card</f7-button>
+        </f7-block>
         <f7-actions :grid="true" :opened="colorPickerBg" @actions:closed="colorPickerBg = false">
             <f7-actions-group>
                 <f7-actions-button v-bind:style="{ backgroundColor: gray }"
@@ -123,6 +126,7 @@
 </style>
 
 <script>
+    import axios from 'axios';
     export default {
         data() {
             return {
@@ -147,11 +151,32 @@
             };
         },
         methods: {
-            changeBg: function (e) {
+            changeBg: function(e) {
                 this.bgColor = e;
             },
-            changeFont: function (e) {
+            changeFont: function(e) {
                 this.fontColor = e;
+            },
+            saveCard: function() {
+                //save to DB and create QR Code
+                axios.post(`http://cardcreo.tk/api/cards`, {
+                    bgColor: this.bgColor,
+                    fontColor: this.fontColor,
+                    name: this.name,
+                    logo: this.logo,
+                    address: this.address,
+                    email: this.email,
+                    phone: this.phone,
+                    website: this.website
+                })
+                    .then(response => {
+                        this.$f7.dialog.alert(`Card has been created!`);
+                        this.$f7.tab.show('#view-my-cards');
+                    })
+                    .catch(e => {
+                        this.$f7.dialog.alert(`Database is not responding. Try again later.`);
+                    })
+
             },
             uploadLogo: function () {
                 navigator.camera.getPicture(this.imgOnSuccess, this.imgOnFail, {
