@@ -1,5 +1,13 @@
 <template>
     <f7-app :params="f7params">
+
+        <f7-panel left reveal>
+            <f7-view>
+                <f7-page>
+                    <f7-block>Left panel content</f7-block>
+                </f7-page>
+            </f7-view>
+        </f7-panel>
         <!-- Status bar overlay for fullscreen mode-->
         <f7-statusbar></f7-statusbar>
         <!-- Views/Tabs container -->
@@ -40,6 +48,9 @@
                     id: 'io.cardcreo.app', // App bundle ID
                     name: 'CardCreo', // App name
                     theme: 'md',
+                    panels3d: {
+                        enabled: true,
+                    },
                     // App routes
                     routes: routes,
                     // Input settings

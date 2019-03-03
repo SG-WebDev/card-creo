@@ -1,6 +1,11 @@
 <template>
     <f7-page name="about">
-        <f7-navbar title="About"></f7-navbar>
+        <f7-navbar>
+            <f7-nav-left>
+                <f7-link icon-md="material:menu" panel-open="left"></f7-link>
+            </f7-nav-left>
+            <f7-nav-title>About</f7-nav-title>
+        </f7-navbar>
         <f7-block-title>About My App</f7-block-title>
         <f7-block strong>
             <p>
