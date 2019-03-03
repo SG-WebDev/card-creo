@@ -4,7 +4,13 @@
         <f7-panel left reveal>
             <f7-view>
                 <f7-page>
-                    <f7-block>Left panel content</f7-block>
+                    <f7-block>
+                        <f7-list>
+                            <f7-list-item title="About" link="/about/"></f7-list-item>
+                            <f7-list-item title="Login" link="#"></f7-list-item>
+                            <f7-list-item title="Logout" link="#"></f7-list-item>
+                        </f7-list>
+                    </f7-block>
                 </f7-page>
             </f7-view>
         </f7-panel>
@@ -17,7 +23,7 @@
                 <f7-link tab-link="#view-create" icon-md="material:create" text="Create"></f7-link>
                 <f7-link tab-link="#view-scan" icon-md="material:camera_alt" text="Scan"></f7-link>
                 <f7-link tab-link="#view-my-cards" icon-md="material:collections" text="My Cards"></f7-link>
-                <f7-link tab-link="#view-about" icon-md="material:info" text="About"></f7-link>
+                <!--<f7-link tab-link="#view-about" icon-md="material:info" text="About"></f7-link>-->
             </f7-toolbar>
 
             <!-- Your main view/tab, should have "view-main" class. It also has "tab-active" class -->
@@ -29,8 +35,8 @@
             <!-- My Cards View -->
             <f7-view id="view-my-cards" name="my-cards" tab url="/my-cards/"></f7-view>
 
-            <!-- About View -->
-            <f7-view id="view-about" name="about" tab url="/about/"></f7-view>
+            <!--&lt;!&ndash; About View &ndash;&gt;-->
+            <!--<f7-view id="view-about" name="about" tab url="/about/"></f7-view>-->
 
         </f7-views>
 
