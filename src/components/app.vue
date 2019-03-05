@@ -4,12 +4,24 @@
         <f7-panel left reveal>
             <f7-view>
                 <f7-page>
-                    <f7-block>
-                        <f7-list>
-                            <f7-list-item title="About" link="/about/"></f7-list-item>
-                            <f7-list-item title="Login" link="#"></f7-list-item>
-                            <f7-list-item title="Logout" link="#"></f7-list-item>
-                        </f7-list>
+                    <f7-block v-if="currentUser">
+                        <p>Hi, {{currentUser}}</p>
+                        <f7-link class="logout-link" @click="logout">LogOut</f7-link>
+                    </f7-block>
+                </f7-page>
+            </f7-view>
+        </f7-panel>
+
+        <f7-panel right reveal>
+            <f7-view>
+                <f7-page>
+                    <f7-block-title>About My App</f7-block-title>
+                    <f7-block strong>
+                        <p>
+                            This is hybrid mobile app based on Framework7 + Vue.js created by
+                            <a target="_blank" class="link external git-link" href="https://github.com/SG-WebDev/">SG-WebDev</a> used to
+                            create and sharing business cards.
+                        </p>
                     </f7-block>
                 </f7-page>
             </f7-view>
@@ -18,12 +30,22 @@
         <f7-statusbar></f7-statusbar>
         <!-- Views/Tabs container -->
         <f7-views tabs class="safe-areas">
+            <!-- Navbar -->
+            <f7-navbar>
+                <f7-nav-left>
+                    <f7-link icon-material="person" panel-open="left"></f7-link>
+                </f7-nav-left>
+                <f7-nav-title class="navbar__title">CardCreo</f7-nav-title>
+                <f7-nav-right>
+                    <f7-link icon-material="info" panel-open="right"></f7-link>
+                </f7-nav-right>
+            </f7-navbar>
+
             <!-- Tabbar for switching views-tabs -->
             <f7-toolbar tabbar labels bottom>
-                <f7-link tab-link="#view-create" icon-md="material:create" text="Create"></f7-link>
-                <f7-link tab-link="#view-scan" icon-md="material:camera_alt" text="Scan"></f7-link>
-                <f7-link tab-link="#view-my-cards" icon-md="material:collections" text="My Cards"></f7-link>
-                <!--<f7-link tab-link="#view-about" icon-md="material:info" text="About"></f7-link>-->
+                <f7-link tab-link="#view-create" icon-material="create" text="Create"></f7-link>
+                <f7-link tab-link="#view-scan" icon-material="camera_alt" text="Scan"></f7-link>
+                <f7-link tab-link="#view-my-cards" icon-material="collections" text="My Cards"></f7-link>
             </f7-toolbar>
 
             <!-- Your main view/tab, should have "view-main" class. It also has "tab-active" class -->
@@ -35,16 +57,38 @@
             <!-- My Cards View -->
             <f7-view id="view-my-cards" name="my-cards" tab url="/my-cards/"></f7-view>
 
-            <!--&lt;!&ndash; About View &ndash;&gt;-->
-            <!--<f7-view id="view-about" name="about" tab url="/about/"></f7-view>-->
-
         </f7-views>
-
+        <f7-login-screen class="login-screen" :opened="loginScreenOpened" @loginscreen:closed="loginScreenOpened = false">
+            <f7-page login-screen>
+                <f7-login-screen-title>CardCreo</f7-login-screen-title>
+                <f7-list form>
+                    <f7-list-input
+                            label="Username"
+                            type="text"
+                            placeholder="Your Email"
+                            :value="email"
+                            @input="email = $event.target.value"
+                    ></f7-list-input>
+                    <f7-list-input
+                            label="Password"
+                            type="password"
+                            placeholder="Your Password"
+                            :value="password"
+                            @input="password = $event.target.value"
+                    ></f7-list-input>
+                </f7-list>
+                <f7-block>
+                    <f7-button large outline @click="signIn">Sign In</f7-button>
+                    <f7-button large fill @click="signUp">Sign Up</f7-button>
+                </f7-block>
+            </f7-page>
+        </f7-login-screen>
     </f7-app>
 </template>
 <script>
     import cordovaApp from '../js/cordova-app.js';
     import routes from '../js/routes.js';
+    import {HTTP} from '../js/httpBase';
 
     export default {
         data() {
@@ -71,18 +115,99 @@
                         androidOverlaysWebView: false,
                     },
                 },
-
+                loginScreenOpened: true,
+                email: '',
+                password: '',
+                currentUser: null,
             }
         },
-        methods: {},
+        methods: {
+            logout: function () {
+                HTTP.get('auth/logout')
+                    .then(response => {
+                            this.currentUser = null;
+                            this.loginScreenOpened = true;
+                            this.email = '';
+                            this.password = '';
+                            this.$f7.dialog.alert(`${response.message}`);
+                    })
+                    .catch(e => {
+                        this.loginScreenOpened = false;
+                        this.$f7.dialog.alert(`${e.message}`);
+                    });
+            },
+            signIn : function () {
+                HTTP.post('auth/login', {
+                    email: this.email,
+                    password: this.password
+                })
+                    .then(response => {
+                        if(response.data._id) {
+                            this.currentUser = response.data.local.email;
+                            this.loginScreenOpened = false;
+                            this.email = response.data.local.email;
+                            this.password = response.data.local.password;
+                            this.$f7.dialog.alert(`${response.message}`);
+                       }
+                        else {
+                            this.loginScreenOpened = true;
+                            this.$f7.dialog.alert(`Can't find this user in database`);
+                        }
+                    })
+                    .catch(e => {
+                        this.loginScreenOpened = true;
+                        this.$f7.dialog.alert(`${e.message}`);
+                    });
+            },
+            signUp : function () {
+                HTTP.post('auth/signup', {
+                    email: this.email,
+                    password: this.password
+                })
+                    .then(response => {
+                        if(response.data._id) {
+                            this.currentUser = response.data.local.email;
+                            this.loginScreenOpened = false;
+                            this.email = response.data.local.email;
+                            this.password = response.data.local.password;
+                            this.$f7.dialog.alert(`${response.message}`);
+                        }
+                        else {
+                            console.log(response);
+                            this.loginScreenOpened = true;
+                            this.$f7.dialog.alert(`Database is not responding. Try again later`);
+                        }
+                    })
+                    .catch(e => {
+                        this.loginScreenOpened = true;
+                        this.$f7.dialog.alert(`${e.message}`);
+                    });
+            },
+        },
         mounted() {
             this.$f7ready((f7) => {
-                // Init cordova APIs (see cordova-app.js)
                 if (f7.device.cordova) {
                     cordovaApp.init(f7);
                 }
-                // Call F7 APIs here
             });
+            HTTP.get('auth/check')
+                .then(response => {
+                    if(response.data._id) {
+                        this.currentUser = response.data.local.email;
+                        this.loginScreenOpened = false;
+                        this.email = response.data.local.email;
+                        this.password = response.data.local.password;
+                        this.$f7.dialog.alert(`${response.message}`);
+                    }
+                    else {
+                        this.loginScreenOpened = true;
+                        this.$f7.dialog.alert(`You must log in!`);
+                    }
+                })
+                .catch(e => {
+                    this.loginScreenOpened = true;
+                    this.$f7.dialog.alert(`${e.message}`);
+                });
         }
     }
 </script>

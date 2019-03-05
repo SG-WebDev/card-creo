@@ -1,13 +1,5 @@
 <template>
     <f7-page name="home">
-        <!-- Top Navbar -->
-        <f7-navbar :sliding="false" large>
-            <f7-nav-left>
-                <f7-link icon-md="material:menu" panel-open="left"></f7-link>
-            </f7-nav-left>
-            <f7-nav-title sliding>Create</f7-nav-title>
-            <f7-nav-title-large>CardCreo</f7-nav-title-large>
-        </f7-navbar>
         <f7-block>
             <f7-button large outline @click="colorPickerBg = true">Select background color</f7-button>
             <f7-button large outline @click="colorPickerFont = true">Select font color</f7-button>
@@ -129,7 +121,7 @@
 </style>
 
 <script>
-    import axios from 'axios';
+    import HTTP from '../js/httpBase';
     export default {
         data() {
             return {
@@ -162,7 +154,7 @@
             },
             saveCard: function() {
                 //save to DB and create QR Code
-                axios.post(`http://cardcreo.tk/api/cards`, {
+                HTTP.post(`api/cards`, {
                     bgColor: this.bgColor,
                     fontColor: this.fontColor,
                     name: this.name,
