@@ -129,7 +129,7 @@
                             this.loginScreenOpened = true;
                             this.email = '';
                             this.password = '';
-                            this.$f7.dialog.alert(`${response.message}`);
+                            this.$f7.dialog.alert(`${response.data.message}`);
                     })
                     .catch(e => {
                         this.loginScreenOpened = false;
@@ -147,7 +147,7 @@
                             this.loginScreenOpened = false;
                             this.email = response.data.local.email;
                             this.password = response.data.local.password;
-                            this.$f7.dialog.alert(`${response.message}`);
+                            this.$f7.dialog.alert(`You're Log In!`);
                        }
                         else {
                             this.loginScreenOpened = true;
@@ -170,7 +170,7 @@
                             this.loginScreenOpened = false;
                             this.email = response.data.local.email;
                             this.password = response.data.local.password;
-                            this.$f7.dialog.alert(`${response.message}`);
+                            this.$f7.dialog.alert(`You're Log In!`);
                         }
                         else {
                             console.log(response);
@@ -197,7 +197,7 @@
                         this.loginScreenOpened = false;
                         this.email = response.data.local.email;
                         this.password = response.data.local.password;
-                        this.$f7.dialog.alert(`${response.message}`);
+                        this.$f7.dialog.alert(`${response.data.message}`);
                     }
                     else {
                         this.loginScreenOpened = true;
