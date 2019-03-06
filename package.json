@@ -1,10 +1,10 @@
 {
   "name": "cardcreo",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "CardCreo",
   "repository": "",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "framework7": {
     "cwd": "C:\\xampp\\htdocs\\CardCreo",
     "type": [

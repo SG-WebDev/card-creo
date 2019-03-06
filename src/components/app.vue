@@ -127,61 +127,67 @@
                     .then(response => {
                             this.currentUser = null;
                             this.loginScreenOpened = true;
-                            this.email = '';
-                            this.password = '';
+                            localStorage.removeItem('userID');
                             this.$f7.dialog.alert(`${response.data.message}`);
                     })
                     .catch(e => {
                         this.loginScreenOpened = false;
-                        this.$f7.dialog.alert(`${e.message}`);
+                        this.$f7.dialog.alert(`Something went wrong!`);
                     });
             },
             signIn : function () {
-                HTTP.post('auth/login', {
-                    email: this.email,
-                    password: this.password
-                })
-                    .then(response => {
-                        if(response.data._id) {
-                            this.currentUser = response.data.local.email;
-                            this.loginScreenOpened = false;
-                            this.email = response.data.local.email;
-                            this.password = response.data.local.password;
-                            this.$f7.dialog.alert(`You're Log In!`);
-                       }
-                        else {
+                if(this.email && this.password) {
+                    HTTP.post('auth/login', {
+                        email: this.email,
+                        password: this.password
+                    })
+                        .then(response => {
+                            if(response.data._id) {
+                                this.currentUser = response.data.local.email;
+                                localStorage.setItem('userID', response.data._id);
+                                this.loginScreenOpened = false;
+                                this.$f7.dialog.alert(`You're Log In!`);
+                            }
+                            else {
+                                this.loginScreenOpened = true;
+                                this.$f7.dialog.alert(`Can't find this user in database`);
+                            }
+                        })
+                        .catch(e => {
                             this.loginScreenOpened = true;
                             this.$f7.dialog.alert(`Can't find this user in database`);
-                        }
-                    })
-                    .catch(e => {
-                        this.loginScreenOpened = true;
-                        this.$f7.dialog.alert(`${e.message}`);
-                    });
+                        });
+                }
+                else {
+                    this.$f7.dialog.alert(`Email and password field must be fill!`);
+                }
+
             },
             signUp : function () {
-                HTTP.post('auth/signup', {
-                    email: this.email,
-                    password: this.password
-                })
-                    .then(response => {
-                        if(response.data._id) {
-                            this.currentUser = response.data.local.email;
-                            this.loginScreenOpened = false;
-                            this.email = response.data.local.email;
-                            this.password = response.data.local.password;
-                            this.$f7.dialog.alert(`You're Log In!`);
-                        }
-                        else {
-                            console.log(response);
-                            this.loginScreenOpened = true;
-                            this.$f7.dialog.alert(`Database is not responding. Try again later`);
-                        }
+                if(this.email && this.password) {
+                    HTTP.post('auth/signup', {
+                        email: this.email,
+                        password: this.password
                     })
-                    .catch(e => {
-                        this.loginScreenOpened = true;
-                        this.$f7.dialog.alert(`${e.message}`);
-                    });
+                        .then(response => {
+                            if (response.data._id) {
+                                this.currentUser = response.data.local.email;
+                                localStorage.setItem('userID', response.data._id);
+                                this.loginScreenOpened = false;
+                                this.$f7.dialog.alert(`You're Log In!`);
+                            } else {
+                                this.loginScreenOpened = true;
+                                this.$f7.dialog.alert(`Database is not responding. Try again later`);
+                            }
+                        })
+                        .catch(e => {
+                            this.loginScreenOpened = true;
+                            this.$f7.dialog.alert(`Can't find this user in database`);
+                        });
+                }
+                else {
+                    this.$f7.dialog.alert(`Email and password field must be fill!`);
+                }
             },
         },
         mounted() {
@@ -194,9 +200,8 @@
                 .then(response => {
                     if(response.data._id) {
                         this.currentUser = response.data.local.email;
+                        localStorage.setItem('userID', response.data._id);
                         this.loginScreenOpened = false;
-                        this.email = response.data.local.email;
-                        this.password = response.data.local.password;
                         this.$f7.dialog.alert(`${response.data.message}`);
                     }
                     else {
@@ -206,7 +211,7 @@
                 })
                 .catch(e => {
                     this.loginScreenOpened = true;
-                    this.$f7.dialog.alert(`${e.message}`);
+                    this.$f7.dialog.alert(`Can't find this user in database`);
                 });
         }
     }

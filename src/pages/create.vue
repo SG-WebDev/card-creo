@@ -121,7 +121,7 @@
 </style>
 
 <script>
-    import HTTP from '../js/httpBase';
+    import {HTTP} from '../js/httpBase';
     export default {
         data() {
             return {
@@ -153,25 +153,30 @@
                 this.fontColor = e;
             },
             saveCard: function() {
-                //save to DB and create QR Code
-                HTTP.post(`api/cards`, {
-                    bgColor: this.bgColor,
-                    fontColor: this.fontColor,
-                    name: this.name,
-                    logo: this.logo,
-                    address: this.address,
-                    email: this.email,
-                    phone: this.phone,
-                    website: this.website
-                })
-                    .then(response => {
-                        this.$f7.dialog.alert(`Card has been created!`);
-                        this.$f7.tab.show('#view-my-cards');
+                //save to DB and create QR Cod
+                if(this.name) {
+                    HTTP.post(`api/cards`, {
+                        bgColor: this.bgColor,
+                        fontColor: this.fontColor,
+                        name: this.name,
+                        logo: this.logo,
+                        address: this.address,
+                        email: this.email,
+                        phone: this.phone,
+                        website: this.website,
+                        userID : localStorage.getItem('userID')
                     })
-                    .catch(e => {
-                        this.$f7.dialog.alert(`Database is not responding. Try again later.`);
-                    })
-
+                        .then(response => {
+                            this.$f7.dialog.alert(`Card has been created!`);
+                            this.$f7.tab.show('#view-my-cards');
+                        })
+                        .catch(e => {
+                            this.$f7.dialog.alert(`Database is not responding. Try again later.`);
+                        });
+                }
+                else {
+                    this.$f7.dialog.alert(`At least name field must be fill!`);
+                }
             },
             uploadLogo: function () {
                 navigator.camera.getPicture(this.imgOnSuccess, this.imgOnFail, {
@@ -184,7 +189,7 @@
                 this.logo = "data:image/jpeg;base64," + imageData;
             },
             imgOnFail: function(message) {
-                alert('Błąd podczas pobierania zdjęcia');
+                this.$f7.dialog.alert(`Something went wrong!`);
             },
         },
     };
