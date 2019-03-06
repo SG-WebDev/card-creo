@@ -202,7 +202,7 @@
                         this.currentUser = response.data.local.email;
                         localStorage.setItem('userID', response.data._id);
                         this.loginScreenOpened = false;
-                        this.$f7.dialog.alert(`${response.data.message}`);
+                        this.$f7.dialog.alert(`${response.message}`);
                     }
                     else {
                         this.loginScreenOpened = true;

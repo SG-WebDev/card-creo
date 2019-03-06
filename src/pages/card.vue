@@ -40,14 +40,5 @@
                     this.$f7.dialog.alert(`Database is not responding. Try again later`);
                 });
         },
-        updated() {
-            HTTP.get(`api/cards/${this.cardID}`)
-                .then(response => {
-                    this.card = response.data.data;
-                })
-                .catch(e => {
-                    this.$f7.dialog.alert(`Database is not responding. Try again later`);
-                });
-        }
     };
 </script>

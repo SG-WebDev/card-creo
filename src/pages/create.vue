@@ -125,6 +125,7 @@
     export default {
         data() {
             return {
+                userID: localStorage.getItem('userID'),
                 colorPickerBg: false,
                 colorPickerFont: false,
                 bgColor: '',
@@ -164,9 +165,10 @@
                         email: this.email,
                         phone: this.phone,
                         website: this.website,
-                        userID : localStorage.getItem('userID')
+                        userID : this.userID
                     })
                         .then(response => {
+                            console.log(response);
                             this.$f7.dialog.alert(`Card has been created!`);
                             this.$f7.tab.show('#view-my-cards');
                         })
