@@ -23,7 +23,7 @@ module.exports = {
     './src/js/app.js',
   ],
   output: {
-    path: resolvePath(isCordova ? 'cordova/www' : 'www'),
+    path: resolvePath(isCordova ? 'cordova/www' : 'docs'),
     filename: 'js/app.js',
     publicPath: '',
   },
@@ -39,7 +39,7 @@ module.exports = {
     hot: true,
     open: true,
     compress: true,
-    contentBase: '/www/',
+    contentBase: '/docs/',
     disableHostCheck: true,
     watchOptions: {
       poll: true,
@@ -194,7 +194,7 @@ module.exports = {
     new CopyWebpackPlugin([
       {
         from: resolvePath('src/static'),
-        to: resolvePath(isCordova ? 'cordova/www/static' : 'www/static'),
+        to: resolvePath(isCordova ? 'cordova/www/static' : 'docs/static'),
       },
 
     ]),

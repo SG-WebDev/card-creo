@@ -32,7 +32,7 @@
             };
         },
         created() {
-            HTTP.get(`api/cards/${this.cardID}`)
+            HTTP.get(`api/card/${this.cardID}`)
                 .then(response => {
                     this.card = response.data.data;
                 })

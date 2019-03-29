@@ -9,7 +9,6 @@
             >
             </f7-list-item>
         </f7-list>
-        <f7-button large fill @click="getList">Save card</f7-button>
     </f7-page>
 </template>
 <script>
@@ -18,34 +17,23 @@
         data() {
             return {
                 cards: [],
-                userID: localStorage.getItem('userID'),
+                userID: null,
             };
         },
         mounted() {
-            HTTP.get('api/cards', {
-                userID: this.userID
-            })
-                .then(response => {
-                    alert(response.data.data);
-                    this.cards = response.data.data;
-                })
-                .catch(e => {
-                    this.$f7.dialog.alert(`Database is not responding. Try again later`);
-                });
-        },
-        methods: {
-            getList: function () {
-                HTTP.get('api/cards', {
-                    userID: this.userID
-                })
+            this.userID = localStorage.getItem('userID');
+            if(this.userID) {
+                HTTP.get(`api/cards/${this.userID}`)
                     .then(response => {
-                        alert(response.data.data);
                         this.cards = response.data.data;
                     })
                     .catch(e => {
                         this.$f7.dialog.alert(`Database is not responding. Try again later`);
                     });
             }
-        }
+            else {
+                this.$f7.dialog.alert(`Something went wrong!`);
+            }
+        },
     };
 </script>

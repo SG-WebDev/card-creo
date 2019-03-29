@@ -128,8 +128,8 @@
                 userID: localStorage.getItem('userID'),
                 colorPickerBg: false,
                 colorPickerFont: false,
-                bgColor: '',
-                fontColor: '',
+                bgColor: '#ffffff',
+                fontColor: '#000000',
                 logo: null,
                 name: '',
                 address: '',
@@ -156,7 +156,7 @@
             saveCard: function() {
                 //save to DB and create QR Cod
                 if(this.name) {
-                    HTTP.post(`api/cards`, {
+                    HTTP.post(`api/card`, {
                         bgColor: this.bgColor,
                         fontColor: this.fontColor,
                         name: this.name,
