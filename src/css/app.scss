@@ -22,24 +22,32 @@ body {
 .navbar {
   z-index: 5001;
 }
-.md .navbar-inner {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.md {
+  .navbar-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .navbar {
+    .right {
+      margin: 0;
+    }
+  }
 }
-.md .navbar .right {
-  margin: 0;
-}
-.panel .page-content {
-  background-color: #ec644b;
-  color: #ffffff;
-}
-.panel .page-content .block-title {
-  font-size: 18px;
-  color: #ffffff;
-}
-.panel .page-content .block {
-  background: none;
+.panel {
+  .page-content {
+    background-color: #ec644b;
+    color: #ffffff;
+    .block-title {
+      font-size: 18px;
+      color: #ffffff;
+      padding: 5px 0;
+      overflow: visible;
+    }
+    .block {
+      background: none;
+    }
+  }
 }
 .title-large-text {
   color: #ec644b;
