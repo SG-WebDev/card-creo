@@ -57,6 +57,8 @@
             <!-- My Cards View -->
             <f7-view id="view-my-cards" name="my-cards" tab url="/my-cards/"></f7-view>
 
+            <f7-view id="view-card" name="card" tab></f7-view>
+
         </f7-views>
         <f7-login-screen class="login-screen" :opened="loginScreenOpened" @loginscreen:closed="loginScreenOpened = false">
             <f7-page login-screen>
@@ -115,7 +117,7 @@
                         androidOverlaysWebView: false,
                     },
                 },
-                loginScreenOpened: true,
+                loginScreenOpened: false,
                 email: '',
                 password: '',
                 currentUser: null,
@@ -196,23 +198,23 @@
                     cordovaApp.init(f7);
                 }
             });
-            HTTP.get('auth/check')
-                .then(response => {
-                    if(response.data._id) {
-                        this.currentUser = response.data.local.email;
-                        localStorage.setItem('userID', response.data._id);
-                        this.loginScreenOpened = false;
-                        this.$f7.dialog.alert(`${response.message}`);
-                    }
-                    else {
-                        this.loginScreenOpened = true;
-                        this.$f7.dialog.alert(`You must log in!`);
-                    }
-                })
-                .catch(e => {
-                    this.loginScreenOpened = true;
-                    this.$f7.dialog.alert(`Can't find this user in database`);
-                });
+            // HTTP.get('auth/check')
+            //     .then(response => {
+            //         if(response.data._id) {
+            //             this.currentUser = response.data.local.email;
+            //             localStorage.setItem('userID', response.data._id);
+            //             this.loginScreenOpened = false;
+            //             this.$f7.dialog.alert(`${response.message}`);
+            //         }
+            //         else {
+            //             this.loginScreenOpened = true;
+            //             this.$f7.dialog.alert(`You must log in!`);
+            //         }
+            //     })
+            //     .catch(e => {
+            //         this.loginScreenOpened = true;
+            //         this.$f7.dialog.alert(`Can't find this user in database`);
+            //     });
         }
     }
 </script>

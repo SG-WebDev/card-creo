@@ -2,9 +2,9 @@
     <f7-page name="catalog">
         <f7-subnavbar>
             <f7-nav-left>
-                <f7-link icon-md="material:keyboard_backspace" back></f7-link>
+                <f7-link href="/my-cards/" class="tab-link" icon-md="material:keyboard_backspace"></f7-link>
             </f7-nav-left>
-            <f7-nav-title>Card</f7-nav-title>
+            <f7-nav-title>{{createDate}}</f7-nav-title>
         </f7-subnavbar>
         <f7-block>
             <div class="preview" v-bind:style="{ backgroundColor: card.bgColor, color: card.fontColor}">
@@ -28,13 +28,15 @@
         data() {
             return {
                 cardID: this.$f7route.params.id,
-                card: null
+                card: null,
+                createDate: null,
             };
         },
         created() {
             HTTP.get(`api/card/${this.cardID}`)
                 .then(response => {
                     this.card = response.data.data;
+                    this.createDate = response.data.data.create_date.substring(0,10);
                 })
                 .catch(e => {
                     this.$f7.dialog.alert(`Database is not responding. Try again later`);
