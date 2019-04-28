@@ -117,7 +117,7 @@
                         androidOverlaysWebView: false,
                     },
                 },
-                loginScreenOpened: false,
+                loginScreenOpened: true,
                 email: '',
                 password: '',
                 currentUser: null,
@@ -198,23 +198,23 @@
                     cordovaApp.init(f7);
                 }
             });
-            // HTTP.get('auth/check')
-            //     .then(response => {
-            //         if(response.data._id) {
-            //             this.currentUser = response.data.local.email;
-            //             localStorage.setItem('userID', response.data._id);
-            //             this.loginScreenOpened = false;
-            //             this.$f7.dialog.alert(`${response.message}`);
-            //         }
-            //         else {
-            //             this.loginScreenOpened = true;
-            //             this.$f7.dialog.alert(`You must log in!`);
-            //         }
-            //     })
-            //     .catch(e => {
-            //         this.loginScreenOpened = true;
-            //         this.$f7.dialog.alert(`Can't find this user in database`);
-            //     });
+            HTTP.get('auth/check')
+                .then(response => {
+                    if(response.data._id) {
+                        this.currentUser = response.data.local.email;
+                        localStorage.setItem('userID', response.data._id);
+                        this.loginScreenOpened = false;
+                        this.$f7.dialog.alert(`${response.message}`);
+                    }
+                    else {
+                        this.loginScreenOpened = true;
+                        this.$f7.dialog.alert(`You must log in!`);
+                    }
+                })
+                .catch(e => {
+                    this.loginScreenOpened = true;
+                    this.$f7.dialog.alert(`Can't find this user in database`);
+                });
         }
     }
 </script>

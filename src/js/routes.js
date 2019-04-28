@@ -11,24 +11,36 @@ var routes = [
     name: 'index',
     path: '/',
     component: CreatePage,
+    options : {
+      reloadCurrent: true
+    },
   },
   {
     id: 'scan',
     name: 'scan',
     path: '/scan/',
     component: ScanPage,
+    options : {
+      reloadCurrent: true
+    },
   },
   {
     id: 'my-cards',
     name: 'my-cards',
     path: '/my-cards/',
     component: MyCardsPage,
+    options : {
+      reloadCurrent: true
+    },
   },
   {
     id: 'card',
     name: 'card',
     path: '/my-cards/:id/',
     component: CardPage,
+    options : {
+      reloadCurrent: true
+    },
   },
   {
     path: '(.*)',
