@@ -134,7 +134,6 @@
                     })
                     .catch(e => {
                         this.loginScreenOpened = false;
-                        this.$f7.dialog.alert(`Something went wrong!`);
                     });
             },
             signIn : function () {
