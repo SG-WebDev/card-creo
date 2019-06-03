@@ -169,7 +169,7 @@
                     })
                         .then(response => {
                             console.log(response);
-                            this.$f7.dialog.alert(`Card has been created!`, this.routeToCards);
+                            this.$f7.dialog.alert(`Card has been created!`);
                         })
                         .catch(e => {
                             this.$f7.dialog.alert(`Database is not responding. Try again later.`);
@@ -192,9 +192,6 @@
             imgOnFail: function(message) {
                 this.$f7.dialog.alert(`Something went wrong!`);
             },
-            routeToCards: function () {
-                this.$f7.views.main.router.navigate('/my-cards/');
-            }
         },
     };
 </script>
