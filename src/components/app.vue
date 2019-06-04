@@ -43,9 +43,9 @@
 
             <!-- Tabbar for switching views-tabs -->
             <f7-toolbar tabbar labels bottom>
-                <f7-link @click="changeTab(1)" class="tab-link" :class="{ 'tab-link-active': activeTab == 1}" icon-material="create" text="Create"></f7-link>
-                <f7-link @click="changeTab(2)" class="tab-link" :class="{ 'tab-link-active': activeTab == 2 }" icon-material="camera_alt" text="Scan"></f7-link>
-                <f7-link @click="changeTab(3)" class="tab-link" :class="{ 'tab-link-active': activeTab == 3}" icon-material="collections" text="My Cards"></f7-link>
+                <f7-link @click="changeTab('/')" class="tab-link" :class="{ 'tab-link-active': activeTab === '/' }" icon-material="create" text="Create"></f7-link>
+                <f7-link @click="changeTab('/scan/')" class="tab-link" :class="{ 'tab-link-active': activeTab === '/scan/' }" icon-material="camera_alt" text="Scan"></f7-link>
+                <f7-link @click="changeTab('/my-cards/')" class="tab-link" :class="{ 'tab-link-active': activeTab === '/my-cards/' }" icon-material="collections" text="My Cards"></f7-link>
             </f7-toolbar>
 
             <!-- Your main view/tab, should have "view-main" class. It also has "tab-active" class -->
@@ -117,11 +117,11 @@
                         androidOverlaysWebView: false,
                     },
                 },
-                loginScreenOpened: false,
+                loginScreenOpened: true,
                 email: '',
                 password: '',
                 currentUser: null,
-                activeTab: 1,
+                activeTab: '/',
             }
         },
         methods: {
@@ -139,16 +139,7 @@
             },
             changeTab: function (tab) {
                 this.activeTab = tab;
-                if(tab == 1) {
-                    this.$f7.views.main.router.navigate('/')
-                }
-                else if(tab == 2) {
-                    this.$f7.views.main.router.navigate('/scan/')
-                }
-                else if(tab == 3) {
-                    this.$f7.views.main.router.navigate('/my-cards/')
-                }
-
+                this.$f7.views.main.router.navigate(tab);
             },
             signIn : function () {
                 if(this.email && this.password) {
@@ -211,23 +202,23 @@
                     cordovaApp.init(f7);
                 }
             });
-            // HTTP.get('auth/check')
-            //     .then(response => {
-            //         if(response.data._id) {
-            //             this.currentUser = response.data.local.email;
-            //             localStorage.setItem('userID', response.data._id);
-            //             this.loginScreenOpened = false;
-            //             this.$f7.dialog.alert(`${response.message}`);
-            //         }
-            //         else {
-            //             this.loginScreenOpened = true;
-            //             this.$f7.dialog.alert(`You must log in!`);
-            //         }
-            //     })
-            //     .catch(e => {
-            //         this.loginScreenOpened = true;
-            //         this.$f7.dialog.alert(`Can't find this user in database`);
-            //     });
+            HTTP.get('auth/check')
+                .then(response => {
+                    if(response.data._id) {
+                        this.currentUser = response.data.local.email;
+                        localStorage.setItem('userID', response.data._id);
+                        this.loginScreenOpened = false;
+                        this.$f7.dialog.alert(`${response.message}`);
+                    }
+                    else {
+                        this.loginScreenOpened = true;
+                        this.$f7.dialog.alert(`You must log in!`);
+                    }
+                })
+                .catch(e => {
+                    this.loginScreenOpened = true;
+                    this.$f7.dialog.alert(`Can't find this user in database`);
+                });
         }
     }
 </script>

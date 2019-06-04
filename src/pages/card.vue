@@ -7,16 +7,16 @@
             <f7-nav-title>{{createDate}}</f7-nav-title>
         </f7-subnavbar>
         <f7-block>
-            <div class="preview" v-bind:style="{ backgroundColor: card.bgColor, color: card.fontColor}">
+            <div v-if="card" class="preview" v-bind:style="{ backgroundColor: card.bgColor, color: card.fontColor}">
                 <div v-if="card.logo" class="preview__logo">
                     <img class="preview__logo--img" :src="card.logo" alt="User Logo">
                 </div>
                 <div class="preview__info">
-                    <p class="preview__info--name">{{card.name}}</p>
-                    <p class="preview__info--address">{{card.address}}</p>
-                    <p class="preview__info--email">{{card.email}}</p>
-                    <p class="preview__info--phone">{{card.phone}}</p>
-                    <p class="preview__info--website">{{card.website}}</p>
+                    <p v-if="card.name" class="preview__info--name">{{card.name}}</p>
+                    <p v-if="card.address" class="preview__info--address">{{card.address}}</p>
+                    <p v-if="card.email" class="preview__info--email">{{card.email}}</p>
+                    <p v-if="card.phone" class="preview__info--phone">{{card.phone}}</p>
+                    <p v-if="card.website" class="preview__info--website">{{card.website}}</p>
                 </div>
             </div>
         </f7-block>
