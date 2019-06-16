@@ -20,23 +20,53 @@
                 </div>
             </div>
         </f7-block>
+        <f7-block>
+            <div v-if="card" class="qrcode">
+                <qrcode-vue :value="qrValue" :size="qrSize" level="L"></qrcode-vue>
+            </div>
+        </f7-block>
     </f7-page>
 </template>
+<style scoped>
+    .qrcode {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
 <script>
     import {HTTP} from '../js/httpBase';
+    import QrcodeVue from 'qrcode.vue';
     export default {
         data() {
             return {
                 cardID: this.$f7route.params.id,
                 card: null,
                 createDate: null,
+                qrValue: '',
+                qrSize: 300
             };
+        },
+        components: {
+            QrcodeVue
         },
         created() {
             HTTP.get(`api/card/${this.cardID}`)
                 .then(response => {
                     this.card = response.data.data;
                     this.createDate = response.data.data.create_date.substring(0,10);
+                    this.qrValue = `BEGIN:VCARD
+VERSION:4.0N:${this.card.name};
+N:${this.card.name}
+ORG:${this.card.name}
+PHOTO;MEDIATYPE=image/png jpg:${this.card.logo}
+TEL;TYPE=work,voice;VALUE=uri:${this.card.phone}
+ADR;TYPE=WORK;PREF=1;LABEL="${this.card.address}":;;${this.card.address}
+EMAIL:${this.card.email}
+URL:${this.card.website}
+REV:20080424T195243Z
+x-qq:21588891
+END:VCARD`;
                 })
                 .catch(e => {
                     this.$f7.dialog.alert(`Database is not responding. Try again later`);

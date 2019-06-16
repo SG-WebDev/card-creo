@@ -155,7 +155,7 @@
             },
             saveCard: function() {
                 //save to DB and create QR Cod
-                if(this.name) {
+                if(this.name && this.phone) {
                     HTTP.post(`api/card`, {
                         bgColor: this.bgColor,
                         fontColor: this.fontColor,
@@ -176,7 +176,7 @@
                         });
                 }
                 else {
-                    this.$f7.dialog.alert(`At least name field must be fill!`);
+                    this.$f7.dialog.alert(`At least name and phone field must be fill!`);
                 }
             },
             uploadLogo: function () {
