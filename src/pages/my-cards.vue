@@ -9,8 +9,11 @@
                     @swipeout:deleted="deleteCard(card._id)"
                     :link="`/my-cards/${card._id}/`"
             >
+                <f7-swipeout-actions left>
+                    <f7-swipeout-button color="green" ><f7-link external :href="`tel:${card.phone}`" class="swiperLink">Call</f7-link></f7-swipeout-button>
+                </f7-swipeout-actions>
                 <f7-swipeout-actions right>
-                    <f7-swipeout-button delete confirm-text="Are you sure you want to delete this card?">Delete</f7-swipeout-button>
+                    <f7-swipeout-button class="swiperLink" delete confirm-text="Are you sure you want to delete this card?">Delete</f7-swipeout-button>
                 </f7-swipeout-actions>
             </f7-list-item>
         </f7-list>
@@ -26,6 +29,10 @@
                 color: #ec644b;
             }
         }
+    }
+    .swiperLink {
+        color: #fff;
+        font-weight: bold;
     }
 }
 </style>
@@ -62,7 +69,7 @@
                   .catch(e => {
                       this.$f7.dialog.alert(`Database is not responding. Try again later`);
                   });
-          }
+          },
         },
     };
 </script>

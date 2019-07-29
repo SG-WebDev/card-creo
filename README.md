@@ -32,7 +32,7 @@ Framework7 app created with following options:
 * `npm run build-cordova-prod` - build cordova's `www` folder from and build cordova app
 ## Cordova
 
-Cordova project located in `cordova` folder. You shcmdouldn't modify content of `cordova/www` folder. Its content will be correctly generated when you call `npm run cordova-build-prod`.
+Cordova project located in `cordova` folder. You shouldn't modify content of `cordova/www` folder. Its content will be correctly generated when you call `npm run cordova-build-prod`.
 
 ## Assets
 
