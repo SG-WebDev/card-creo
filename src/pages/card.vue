@@ -61,7 +61,7 @@ N:${this.card.name}
 ORG:${this.card.name}
 PHOTO;MEDIATYPE=image/png jpg:${this.card.logo}
 TEL;TYPE=work,voice;VALUE=uri:${this.card.phone}
-ADR;TYPE=WORK;PREF=1;LABEL="${this.card.address}":;;${this.card.address}
+ADR;TYPE=WORK;PREF=1;LABEL="${this.card.address}":${this.card.address}
 EMAIL:${this.card.email}
 URL:${this.card.website}
 REV:20080424T195243Z
