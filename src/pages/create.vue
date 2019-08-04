@@ -190,7 +190,7 @@
                 this.logo = "data:image/jpeg;base64," + imageData;
             },
             imgOnFail: function(message) {
-                this.$f7.dialog.alert(`Something went wrong!`);
+                this.$f7.dialog.alert(`Something went wrong! ${message}`);
             },
         },
     };
